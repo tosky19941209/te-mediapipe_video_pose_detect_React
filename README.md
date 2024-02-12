@@ -12,7 +12,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-![overview](assets/image.png)
+![overview](public/Pose_detection.gif)
 
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**

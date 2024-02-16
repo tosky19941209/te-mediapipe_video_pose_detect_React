@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Result () {
+    const[couter, setcounter] = useState(null)
     return (
         <>
         </>

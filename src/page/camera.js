@@ -41,8 +41,6 @@ function Camera({ stateVideoPlay }) {
         const videoWidth = videoElement.videoWidth;
         const videoHeight = videoElement.videoHeight;
 
-        // canvasElement.width = videoWidth / 1;
-        // canvasElement.height = videoHeight / 1;
 
         canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
         canvasCtx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);

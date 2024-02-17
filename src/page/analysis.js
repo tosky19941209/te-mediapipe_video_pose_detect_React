@@ -45,9 +45,8 @@ const VideoPoseDetection = () => {
 
       }
     }
-
-
   };
+  
   const userPose = new Pose({
     locateFile: (file) => {
       return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;

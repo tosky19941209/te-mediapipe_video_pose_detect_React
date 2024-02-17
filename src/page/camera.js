@@ -1,28 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import Canvas from "../component/Canvas/Canvas";
 import './Camera.css'
-function Camera(props) {
+function Camera({stateVideoPlay}) {
     const [className_svg, setClassName_svg] = useState('svg_css')
     const [className_cambtn, setClassName_cambtn] = useState('btn_camera')
     const [videoFrame, setVideoFrame] = useState(null)
-    const canvasRef = useRef(null)
     const videoRef = useRef(null)
-
+    
+    useEffect(() => {
+        const video = videoRef.current
+        if(stateVideoPlay == true){
+            videoRef.current.play()
+            
+        }
+    },[stateVideoPlay])
+    
     useEffect(() => {
         const video = videoRef.current;
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-
         const drawFrame = () => {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            requestAnimationFrame(drawFrame);
+            setVideoFrame(video)
         };
-
         video.addEventListener('play', drawFrame);
-
         return () => video.removeEventListener('play', drawFrame);
     }, []);
-
 
     return (
         <div>
@@ -31,7 +31,7 @@ function Camera(props) {
                 height: "35vw",
                 marginTop: "2vw"
             }}>
-                <Canvas ref={canvasRef}></Canvas>
+                <Canvas frame={videoFrame}></Canvas>
                 {/* <canvas ref={canvasRef} width="950vw" height='680vw' style={{backgroundColor:"black"}}/> */}
 
                 <button className={className_cambtn} onClick={e => {
@@ -57,7 +57,7 @@ function Camera(props) {
                     </svg>
                 </button>
             </div>
-            <video ref={videoRef} width='100px' height='100px' controls>
+            <video ref={videoRef} width='0' height='0' controls muted="muted">
                 <source src='video.mp4' type='video/mp4'></source>
             </video>
         </div>

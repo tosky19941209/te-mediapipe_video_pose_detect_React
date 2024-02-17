@@ -4,7 +4,13 @@ import './style/bootstrap/css/bootstrap.min.css'
 import Camera from './page/Camera.js'
 import Result from './page/Result.js'
 import Load from './component/Loading/Load.js'
-function App() {
+import { useEffect, useState } from 'react';
+const App = () => {
+  const [stateVideoPlay, setStateVideoPlay] = useState(false)
+
+  const updateStateVideo = (value) => {
+    setStateVideoPlay(value)
+  }
   return (
     <div className="App"    >
       <header className="App-header"
@@ -22,8 +28,8 @@ function App() {
         </div>
 
         <div className='d-flex justify-content-between align-content-between' style={{ marginTop: "-5vw" }}>
-          <Camera></Camera>
-          <Result></Result>
+          <Camera stateVideoPlay={stateVideoPlay}></Camera>
+          <Result updateStateVideo={updateStateVideo} stateVideoPlay={stateVideoPlay}></Result>
         </div>
       </header>
     </div>

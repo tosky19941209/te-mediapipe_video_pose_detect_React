@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Text from '../component/Text/Text'
 import './Result.css'
-function Result(props) {
+const Result = ({updateStateVideo, stateVideoPlay}) => {
     const [rangeColor, setRangeColor] = useState("blue")
     const [counter, setCounter] = useState(0)
     const [selectOption_exercise_kind, setSelectOption_exercise_kind] = useState('')
@@ -79,7 +79,7 @@ function Result(props) {
                         height: "18vw",
                     }}
                 >
-                    <select class="form-control form-control-lg" value={selectOption_exercise_kind}
+                    <select className="form-control form-control-lg" value={selectOption_exercise_kind}
                         onChange={(e) => {
                             setSelectOption_exercise_kind(e.target.value)
                         }}>
@@ -90,14 +90,17 @@ function Result(props) {
                             ))
                         }
                     </select>
-                </div>
+                </div>  
 
                 {/* Button */}
                 <button
                     className="btn_start"
                     style={{ width: "22vw", height: "3vw", fontSize: "1.5vw" }}
                     onClick={() => {
-                        
+                        // console.log('ok')
+                        if(stateVideoPlay === false)
+                            updateStateVideo(true)
+                        else updateStateVideo(false)
                     }}>
                     Start
                 </button>

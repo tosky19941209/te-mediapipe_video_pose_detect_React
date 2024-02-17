@@ -82,7 +82,7 @@ function Camera({ stateVideoPlay }) {
                 const video = videoRef.current;
                 if (video)
                     poseRef.current.send({ image: video });
-            }, 70);
+            }, 78);
             return () => {
                 clearInterval(myInterval);
             }

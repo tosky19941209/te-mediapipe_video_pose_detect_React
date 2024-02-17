@@ -31,7 +31,7 @@ const VideoPoseDetection = () => {
 
     if (results.poseLandmarks) {
       drawConnectors(canvasCtx, results.poseLandmarks, mediapipePose.POSE_CONNECTIONS, { color: '#FF0000', lineWidth: 4 });
-      drawLandmarks(canvasCtx, results.poseLandmarks, { color: '#00FF00', lineWidth: 2 });
+      drawLandmarks(canvasCtx, results.poseLandmarks, { color: '#00FF00', lineWidth: 5 });
 
       const rightWrist = results.poseLandmarks[RIGHT_WRIST_INDEX];
       const leftWright = results.poseLandmarks[LEFT_WRIST_INDEX]
@@ -46,7 +46,7 @@ const VideoPoseDetection = () => {
       }
     }
   };
-  
+
   const userPose = new Pose({
     locateFile: (file) => {
       return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;

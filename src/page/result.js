@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { ReactDOM } from "react";
 import Text from '../component/Text/Text'
 import './Result.css'
 const Result = ({updateStateVideo, stateVideoPlay}) => {

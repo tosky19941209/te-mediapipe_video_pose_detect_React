@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Canvas from "../component/Canvas/Canvas";
 import './Camera.css'
 function Camera() {
     const [className_svg, setClassName_svg] = useState('svg_css')
     const [className_cambtn, setClassName_cambtn] = useState('btn_camera')
-
+    const canvasRef = useRef(null)
     return (
         <div>
             <div className="d-flex" style={{
@@ -37,7 +37,7 @@ function Camera() {
                 </button>
             </div>
             <video width='100px' height='100px' controls>
-                <source src='' type='video/mp4'></source>
+                <source src='video.mp4' type='video/mp4'></source>
             </video>
         </div>
 

@@ -12,6 +12,7 @@ function Camera() {
             marginTop: "2vw"
         }}>
             <Canvas></Canvas>
+            <video></video>
             <button className={className_cambtn} onClick={e => {
                 if (className_svg == 'svg_css') {
                     setClassName_svg('svg_css_active')

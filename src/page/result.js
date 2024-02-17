@@ -47,7 +47,6 @@ function Result() {
                     marginLeft: "-14vw",
                 }}
             >
-
                 {/* Display the counter and Accuracy */}
                 <div className={className_d}
                     style={{

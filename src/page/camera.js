@@ -6,7 +6,7 @@ function Camera({stateVideoPlay}) {
     const [className_cambtn, setClassName_cambtn] = useState('btn_camera')
     const [videoFrame, setVideoFrame] = useState(null)
     const videoRef = useRef(null)
-    
+    const canvasRef = useRef(null)
     useEffect(() => {
         const video = videoRef.current
         if(stateVideoPlay == true){
@@ -17,8 +17,11 @@ function Camera({stateVideoPlay}) {
     
     useEffect(() => {
         const video = videoRef.current;
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d')
         const drawFrame = () => {
-            setVideoFrame(video)
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+            requestAnimationFrame(drawFrame)
         };
         video.addEventListener('play', drawFrame);
         return () => video.removeEventListener('play', drawFrame);
@@ -31,7 +34,7 @@ function Camera({stateVideoPlay}) {
                 height: "35vw",
                 marginTop: "2vw"
             }}>
-                <Canvas frame={videoFrame}></Canvas>
+                <Canvas ref={canvasRef}></Canvas>
                 {/* <canvas ref={canvasRef} width="950vw" height='680vw' style={{backgroundColor:"black"}}/> */}
 
                 <button className={className_cambtn} onClick={e => {

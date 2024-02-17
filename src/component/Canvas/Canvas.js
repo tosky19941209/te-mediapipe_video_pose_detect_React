@@ -1,35 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, forwardRef } from "react";
 
-function Canvas(props) {
-    const canvasRef = useRef(null);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-
-        console.log("Props frame in Canvas:", props.frame);
-
-        // ctx.drawImage(props.frame, 0, 0, canvas.width, canvas.height);
-        const drawFrame = () => {
-            ctx.drawImage(props.frame, 0, 0, canvas.width, canvas.height);
-            requestAnimationFrame(drawFrame)
-        }
-
-        if (props.frame) {
-            drawFrame()
-        }
-    }, props.frame);
-
+const Canvas = forwardRef((props, ref) => {
     return (
-        <canvas
-            ref={canvasRef}
-            width={950}
-            height={680}
+        <canvas ref={ref} width="950vw" height='680vw'
             style={{
-                backgroundColor: "black"
+                backgroundColor:"black",
+                // zIndex:"2"
             }}
-        ></canvas>
-    );
-}
+        >
+        </canvas>
+    )
+})
+
+
 
 export default Canvas;

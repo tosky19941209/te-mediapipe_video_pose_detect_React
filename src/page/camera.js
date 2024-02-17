@@ -12,19 +12,6 @@ function Camera({ stateVideoPlay }) {
     const videoRef = useRef(null)
     const canvasRef = useRef(null)
 
-
-    // useEffect(() => {
-    //     const video = videoRef.current;
-    //     const canvas = canvasRef.current;
-    //     const ctx = canvas.getContext('2d')
-    //     const drawFrame = () => {
-    //         ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
-    //         requestAnimationFrame(drawFrame)
-    //     };
-    //     video.addEventListener('play', drawFrame);
-    //     return () => video.removeEventListener('play', drawFrame);
-    // }, []);
-
     const poseRef = useRef(null);
     const [x_landmark, set_x_landmark] = useState(null)
     const [y_landmark, set_y_landmark] = useState(null)

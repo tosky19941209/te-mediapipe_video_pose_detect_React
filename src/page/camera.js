@@ -1,12 +1,28 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Canvas from "../component/Canvas/Canvas";
 import './Camera.css'
-function Camera() {
+function Camera(props) {
     const [className_svg, setClassName_svg] = useState('svg_css')
     const [className_cambtn, setClassName_cambtn] = useState('btn_camera')
-    
+    const [videoFrame, setVideoFrame] = useState(null)
     const canvasRef = useRef(null)
     const videoRef = useRef(null)
+
+    useEffect(() => {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+
+        const drawFrame = () => {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(drawFrame);
+        };
+
+        video.addEventListener('play', drawFrame);
+
+        return () => video.removeEventListener('play', drawFrame);
+    }, []);
+
 
     return (
         <div>
@@ -15,7 +31,9 @@ function Camera() {
                 height: "35vw",
                 marginTop: "2vw"
             }}>
-                <Canvas ref = {canvasRef}></Canvas>
+                <Canvas ref={canvasRef}></Canvas>
+                {/* <canvas ref={canvasRef} width="950vw" height='680vw' style={{backgroundColor:"black"}}/> */}
+
                 <button className={className_cambtn} onClick={e => {
                     if (className_svg == 'svg_css') {
                         setClassName_svg('svg_css_active')

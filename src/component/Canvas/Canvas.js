@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef, forwardRef } from "react";
 
-function Canvas(props) {
+const Canvas = forwardRef((props, ref) => {
+    
     return (
-        <canvas ref={props.canvasRef} width="950vw" height='680vw'
+        <canvas ref={ref} width="950vw" height='680vw'
             style={{
                 // backgroundColor:"black",
                 // zIndex:"2"
@@ -10,5 +11,8 @@ function Canvas(props) {
         >
         </canvas>
     )
-}
-export default Canvas
+})
+
+
+
+export default Canvas;

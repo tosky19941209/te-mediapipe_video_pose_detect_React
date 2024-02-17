@@ -1,7 +1,7 @@
-import React, {useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Text from '../component/Text/Text'
 import './Result.css'
-function Result() {
+function Result(props) {
     const [rangeColor, setRangeColor] = useState("blue")
     const [counter, setCounter] = useState(0)
     const [selectOption_exercise_kind, setSelectOption_exercise_kind] = useState('')
@@ -93,7 +93,14 @@ function Result() {
                 </div>
 
                 {/* Button */}
-                <button className = "btn_start"  style={{width:"22vw", height:"3vw", fontSize:"1.5vw"}} >Start</button>
+                <button
+                    className="btn_start"
+                    style={{ width: "22vw", height: "3vw", fontSize: "1.5vw" }}
+                    onClick={() => {
+                        
+                    }}>
+                    Start
+                </button>
             </div>
         </div>
     )

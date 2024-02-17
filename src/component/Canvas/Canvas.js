@@ -4,7 +4,7 @@ function Canvas(props) {
     return (
         <canvas ref={props.canvasRef} width="950vw" height='680vw'
             style={{
-                backgroundColor:"black",
+                // backgroundColor:"black",
                 // zIndex:"2"
             }}
         >

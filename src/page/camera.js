@@ -4,7 +4,10 @@ import './Camera.css'
 function Camera() {
     const [className_svg, setClassName_svg] = useState('svg_css')
     const [className_cambtn, setClassName_cambtn] = useState('btn_camera')
+    
     const canvasRef = useRef(null)
+    const videoRef = useRef(null)
+
     return (
         <div>
             <div className="d-flex" style={{
@@ -12,7 +15,7 @@ function Camera() {
                 height: "35vw",
                 marginTop: "2vw"
             }}>
-                <Canvas></Canvas>
+                <Canvas ref = {canvasRef}></Canvas>
                 <button className={className_cambtn} onClick={e => {
                     if (className_svg == 'svg_css') {
                         setClassName_svg('svg_css_active')
@@ -36,7 +39,7 @@ function Camera() {
                     </svg>
                 </button>
             </div>
-            <video width='100px' height='100px' controls>
+            <video ref={videoRef} width='100px' height='100px' controls>
                 <source src='video.mp4' type='video/mp4'></source>
             </video>
         </div>

@@ -6,8 +6,6 @@ import { Pose } from "@mediapipe/pose";
 import Cal_angle from "../analysis_angle/analysis_angle";
 import Canvas from "../component/Canvas/Canvas";
 import './Camera.css'
-// import { updateExpression } from "@babel/types";
-// import internal from "stream";
 
 
 function Camera({props, updateStateData, results_Data }) {

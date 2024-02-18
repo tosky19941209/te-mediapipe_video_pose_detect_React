@@ -3,22 +3,14 @@ import { ReactDOM } from "react";
 import * as mediapipePose from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
 import { Pose } from "@mediapipe/pose";
-import Cal_angle from "../analysis_exercise/analysis_exercise";
+import Cal_angle from "../analysis_angle/analysis_angle";
 import Canvas from "../component/Canvas/Canvas";
 import './Camera.css'
-import { updateExpression } from "@babel/types";
-import internal from "stream";
+// import { updateExpression } from "@babel/types";
+// import internal from "stream";
 
 
-function Camera({ updateStateData, results_Data }) {
-    const [className_svg, setClassName_svg] = useState('svg_css')
-    const [className_cambtn, setClassName_cambtn] = useState('btn_camera')
-
-    const videoRef = useRef(null)
-    const canvasRef = useRef(null)
-    const [x_landmark, set_x_landmark] = useState(null)
-    const poseRef = useRef(null);
-    const [cal_result, setCalResult] = useState(0)
+function Camera({props, updateStateData, results_Data }) {
     const index_landmark = {
         nose: 0,
         left_eye_inner: 1,
@@ -54,6 +46,18 @@ function Camera({ updateStateData, results_Data }) {
         left_foot_index: 31,
         right_foot_index: 32
     }
+
+    const landmark1 = index_landmark.right_shoulder
+    const landmark2 = index_landmark.right_hip
+    const landmark3 = index_landmark.right_ankle
+
+    const [className_svg, setClassName_svg] = useState('svg_css')
+    const [className_cambtn, setClassName_cambtn] = useState('btn_camera')
+
+    const videoRef = useRef(null)
+    const canvasRef = useRef(null)
+    const poseRef = useRef(null);
+    const [cal_result, setCalResult] = useState(0)
     const onResults = (results) => {
 
 
@@ -67,9 +71,9 @@ function Camera({ updateStateData, results_Data }) {
 
         if (results.poseLandmarks) {
             drawConnectors(canvasCtx, results.poseLandmarks, mediapipePose.POSE_CONNECTIONS, { color: '#FF0000', lineWidth: 4 });
-            drawLandmarks(canvasCtx, [results.poseLandmarks[index_landmark.right_shoulder], results.poseLandmarks[index_landmark.right_elbow], results.poseLandmarks[index_landmark.right_wrist]], { color: '#00FF00', lineWidth: 1 });
+            drawLandmarks(canvasCtx, [results.poseLandmarks[landmark1], results.poseLandmarks[landmark2], results.poseLandmarks[landmark3]], { color: '#00FF00', lineWidth: 1 });
 
-            const angle = Cal_angle(results, index_landmark.right_shoulder, index_landmark.right_elbow, index_landmark.right_wrist)
+            const angle = Cal_angle(results, landmark1, landmark2, landmark3)
             setCalResult(angle)
         }
     };
@@ -112,7 +116,9 @@ function Camera({ updateStateData, results_Data }) {
     }, []);
 
     useEffect(() => {
-        console.log(cal_result)    
+        const newdata = {...results_Data, accuracy: cal_result}
+        updateStateData(newdata)    
+        // console.log(newdata)
     }, [cal_result])
 
     return (
@@ -121,7 +127,7 @@ function Camera({ updateStateData, results_Data }) {
                 width: "50vw",
                 height: "35vw",
                 marginTop: "2vw"
-            }}>ewszxz
+            }}>
                 <Canvas ref={canvasRef}></Canvas>
 
                 <button className={className_cambtn} onClick={e => {
@@ -153,7 +159,6 @@ function Camera({ updateStateData, results_Data }) {
             <video ref={videoRef} width='0' height='0' controls muted="muted">
                 <source src='video.mp4' type='video/mp4'></source>
             </video>
-            <p>{x_landmark}</p>
         </div>
 
     )

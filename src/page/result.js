@@ -1,12 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
 import Text from '../component/Text/Text'
 import './Result.css'
-function Result  ({ updateStateData, results_Data }) {
+function Result  ({props, updateStateData, results_Data }) {
+    const high_limit_accuracy = 80
+    const low_limit_accuracy = 10
     const [rangeColor, setRangeColor] = useState("blue")
-    
-    const [range, setRange] = useState(0)
-    const [counter, setCounter] = useState(0)
     const [selectOption_exercise_kind, setSelectOption_exercise_kind] = useState('')
+
+    const [result_accuracy, setResultAccuracy] = useState(0)
+    const [result_counter, setResultCounter] = useState(0)
+    const [result_counter_index, setResultCounterIndex] = useState(true)
 
     const rangeRef = useRef(null)
 
@@ -17,27 +20,37 @@ function Result  ({ updateStateData, results_Data }) {
     const kind_exercise = ['exercise_1', 'exercise_2', 'exercise_3', 'exercise_4', 'exercise_5', 'exercise_6']
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setRange(results_Data.accuracy)
-            // console.log(results_Data.accuracy)
-            if (rangeRef.current.value > 80) {  
-                setRangeColor("rgb(7, 233, 75)");
+        const accuracy = 100 - 100 * ( results_Data.accuracy - 90) / 90
+        // console.log(accuracy)
+        if( accuracy > 100) {
+            const new_accuracy = 0
+            setResultAccuracy(new_accuracy)
+        }
+        else {
+            const new_accuracy = accuracy
+            setResultAccuracy(new_accuracy)
+        }
 
-            } else {
-                setRangeColor("blue");
+        if (rangeRef.current.value > high_limit_accuracy) {  
+            setRangeColor("rgb(7, 233, 75)");
+            if (result_counter_index === false){
+                setResultCounter(result_counter + 1)
+                setResultCounterIndex(true)
             }
-        }, 100);
-        return () => clearInterval(interval); // Clear the interval on component unmount
-    }, []); // Empty dependency array ensures the effect runs only once
-    // useEffect(() => {
-    //     console.log(results_Data)
-    // },results_Data)
+        } else {
+            setRangeColor("blue");
+        } 
+        if( rangeRef.current.value <= low_limit_accuracy){
+            setResultCounterIndex(false)
+        }
+
+    },[results_Data])
 
 
     return (
         <div className={className}>
             <div className={className} style={{ zIndex: "0", }}>
-                <input ref={rangeRef} type="range" value={range} min='0' max='100'
+                <input ref={rangeRef} type="range" value={result_accuracy} min='0' max='100'
                     style={{
                         transform: 'rotate(270deg)', // Rotate the progress bar to make it vertical
                         width: "35vw",
@@ -73,7 +86,7 @@ function Result  ({ updateStateData, results_Data }) {
                                 >
                                     <Text text={item} color='blue' mt='1vw' />
                                     {/* <Text text = {counter} color = '' mt='1vh' ml='8vw' fontsi/> */}
-                                    <p className={className} style={{ marginLeft: "8vw", marginTop: '0.4vw', fontSize: "2.5vw", color: "red" }}> {counter} </p>
+                                    <p className={className} style={{ marginLeft: "8vw", marginTop: '0.4vw', fontSize: "2.5vw", color: "red" }}> {result_counter} </p>
                                 </div>
                             </>
                         ))

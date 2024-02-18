@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { ReactDOM } from "react";
 import Text from '../component/Text/Text'
 import './Result.css'
-const Result = ({updateStateVideo, stateVideoPlay}) => {
+function Result  ({ updateStateData, results_Data }) {
     const [rangeColor, setRangeColor] = useState("blue")
+    
+    const [range, setRange] = useState(0)
     const [counter, setCounter] = useState(0)
     const [selectOption_exercise_kind, setSelectOption_exercise_kind] = useState('')
 
@@ -17,19 +18,26 @@ const Result = ({updateStateVideo, stateVideoPlay}) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (rangeRef.current.value > 90) {
+            setRange(results_Data.accuracy)
+            // console.log(results_Data.accuracy)
+            if (rangeRef.current.value > 80) {  
                 setRangeColor("rgb(7, 233, 75)");
+
             } else {
                 setRangeColor("blue");
             }
         }, 100);
         return () => clearInterval(interval); // Clear the interval on component unmount
     }, []); // Empty dependency array ensures the effect runs only once
+    // useEffect(() => {
+    //     console.log(results_Data)
+    // },results_Data)
+
 
     return (
         <div className={className}>
             <div className={className} style={{ zIndex: "0", }}>
-                <input ref={rangeRef} type="range" value='91' min='0' max='100'
+                <input ref={rangeRef} type="range" value={range} min='0' max='100'
                     style={{
                         transform: 'rotate(270deg)', // Rotate the progress bar to make it vertical
                         width: "35vw",
@@ -38,7 +46,6 @@ const Result = ({updateStateVideo, stateVideoPlay}) => {
                     }}
                 />
             </div>
-
             {/* Show Result */}
             <div className={className_d}
                 style={{
@@ -91,7 +98,7 @@ const Result = ({updateStateVideo, stateVideoPlay}) => {
                             ))
                         }
                     </select>
-                </div>  
+                </div>
 
                 {/* Button */}
                 <button
@@ -99,9 +106,16 @@ const Result = ({updateStateVideo, stateVideoPlay}) => {
                     style={{ width: "22vw", height: "3vw", fontSize: "1.5vw" }}
                     onClick={() => {
                         // console.log('ok')
-                        if(stateVideoPlay === false)
-                            updateStateVideo(true)
-                        else updateStateVideo(false)
+                        if (results_Data.stateVideoPlay === false) {
+                            const newData = { ...results_Data, stateVideoPlay: true }
+                            updateStateData(newData)
+                            // console.log("Hello")                          
+                        }
+
+                        else {
+                            const newData = { ...results_Data, stateVideoPlay: false }
+                            updateStateData(newData)
+                        }
                     }}>
                     Start
                 </button>

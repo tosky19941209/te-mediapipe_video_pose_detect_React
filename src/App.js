@@ -6,11 +6,23 @@ import Result from './page/Result.js'
 import Load from './component/Loading/Load.js'
 import { useEffect, useState } from 'react';
 const App = () => {
-  const [stateVideoPlay, setStateVideoPlay] = useState(false)
 
-  const updateStateVideo = (value) => {
-    setStateVideoPlay(value)
+  const [results_Data, setResultData] = useState({
+    accuracy:0,
+    repetition:0,
+    score:0,
+    kind_exercise:"",
+    stateVideoPlay:false
+  })
+
+  const updateStateData = (value) => {
+    setResultData(value)
   }
+  useEffect(()=>{
+    console.log(results_Data.stateVideoPlay)
+  },results_Data.stateVideoPlay)
+
+
   return (
     <div className="App"    >
       <header className="App-header"
@@ -28,8 +40,8 @@ const App = () => {
         </div>
 
         <div className='d-flex justify-content-between align-content-between' style={{ marginTop: "-5vw" }}>
-          <Camera stateVideoPlay={stateVideoPlay}></Camera>
-          <Result updateStateVideo={updateStateVideo} stateVideoPlay={stateVideoPlay}></Result>
+          <Camera updateStateData={updateStateData} results_Data={results_Data}></Camera>
+          <Result updateStateData={updateStateData} results_Data={results_Data}></Result>
         </div>
       </header>
     </div>

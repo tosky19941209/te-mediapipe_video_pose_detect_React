@@ -1,60 +1,79 @@
 .btn_camera {
     position: absolute;
     background-color: transparent;
-    border:1px solid rgb(3,238,213);
+    border: 1px solid rgb(3, 238, 213);
     border-radius: 50%;
-    width:5vw;
+    width: 5vw;
     height: 5vw;
     display: flex;
     justify-content: center;
-    align-items: center ;
+    align-items: center;
     margin-top: 28vw;
     margin-left: 22vw;
     transition: 1s;
-  }
+}
 
-  .btn_camera:hover {
-    box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815); ;
+.btn_camera:hover {
+    box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+    ;
     transition: 0.2s;
 }
 
 .btn_camera_active {
     position: absolute;
     background-color: transparent;
-    border:1px solid rgb(3,238,213);
+    border: 1px solid rgb(3, 238, 213);
     border-radius: 50%;
-    width:5vw;
+    width: 5vw;
     height: 5vw;
     display: flex;
     justify-content: center;
-    align-items: center ;
+    align-items: center;
     margin-top: 28vw;
     margin-left: 22vw;
-    box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815); ;
+    box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+    ;
     transition: 1s;
 }
+
 .svg_css {
     position: relative;
-    fill:white;
+    fill: white;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width:3vw;
+    width: 3vw;
     height: 3vw;
     transition: 0.5s;
 }
-.svg_css_active{
+
+.svg_css_active {
     position: relative;
-    fill:red;
+    fill: red;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width:3vw;
+    width: 3vw;
     height: 3vw;
     transition: 0.5s;
     /* box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815); ; */
+}
+
+.camera_disable {
+    position: absolute;
+    width: 49vw;
+    height: 35vw;
+    z-index: 0;
+    background-color: black;
+}
+.camera_enable {
+    position: absolute;
+    width: 49vw;
+    height: 35vw;
+    z-index: -1;
+    background-color: black;
 }

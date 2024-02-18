@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import Text from '../component/Text/Text'
 import './Result.css'
-function Result  ({props, updateStateData, results_Data }) {
+function Result({ props, updateStateData, results_Data }) {
     const high_limit_accuracy = 80
     const low_limit_accuracy = 10
     const [rangeColor, setRangeColor] = useState("blue")
-    const [selectOption_exercise_kind, setSelectOption_exercise_kind] = useState('')
+    // const [selectOption_exercise_kind, setSelectOption_exercise_kind] = useState('video')
 
     const [result_accuracy, setResultAccuracy] = useState(0)
     const [result_counter, setResultCounter] = useState(0)
@@ -17,34 +17,38 @@ function Result  ({props, updateStateData, results_Data }) {
     const className_d = 'd-flex flex-column justify-content-center align-content-center'
 
     const result_context = ['Counter', 'Score']
-    const kind_exercise = ['exercise_1', 'exercise_2', 'exercise_3', 'exercise_4', 'exercise_5', 'exercise_6']
+    const kind_exercise = ['video1', 'video2']
 
     useEffect(() => {
-        const accuracy = 100 - 100 * ( results_Data.accuracy - 90) / 90
-        // console.log(accuracy)
-        if( accuracy > 100) {
-            const new_accuracy = 0
-            setResultAccuracy(new_accuracy)
+        if (results_Data.cameraState === true) {
+            const accuracy = 100 - 100 * (results_Data.accuracy - 90) / 90
+            if (accuracy > 100) {
+                const new_accuracy = 0
+                setResultAccuracy(new_accuracy)
+            }
+            else {
+                const new_accuracy = accuracy
+                setResultAccuracy(new_accuracy)
+            }
+
+            if (rangeRef.current.value > high_limit_accuracy) {
+                setRangeColor("rgb(7, 233, 75)");
+                if (result_counter_index === false) {
+                    setResultCounter(result_counter + 1)
+                    setResultCounterIndex(true)
+                }
+            } else {
+                setRangeColor("blue");
+            }
+            if (rangeRef.current.value <= low_limit_accuracy) {
+                setResultCounterIndex(false)
+            }
+
         }
         else {
-            const new_accuracy = accuracy
-            setResultAccuracy(new_accuracy)
+            setResultAccuracy(0)
         }
-
-        if (rangeRef.current.value > high_limit_accuracy) {  
-            setRangeColor("rgb(7, 233, 75)");
-            if (result_counter_index === false){
-                setResultCounter(result_counter + 1)
-                setResultCounterIndex(true)
-            }
-        } else {
-            setRangeColor("blue");
-        } 
-        if( rangeRef.current.value <= low_limit_accuracy){
-            setResultCounterIndex(false)
-        }
-
-    },[results_Data])
+    }, [results_Data])
 
 
     return (
@@ -100,9 +104,11 @@ function Result  ({props, updateStateData, results_Data }) {
                         height: "18vw",
                     }}
                 >
-                    <select className="form-control form-control-lg" value={selectOption_exercise_kind}
+                    <select className="form-control form-control-lg"
                         onChange={(e) => {
-                            setSelectOption_exercise_kind(e.target.value)
+                            const new_data = { ...results_Data, kind_exercise: `${e.target.value}.mp4` }
+                            updateStateData(new_data)
+                            setResultCounter(0)
                         }}>
 
                         {
@@ -118,11 +124,9 @@ function Result  ({props, updateStateData, results_Data }) {
                     className="btn_start"
                     style={{ width: "22vw", height: "3vw", fontSize: "1.5vw" }}
                     onClick={() => {
-                        // console.log('ok')
                         if (results_Data.stateVideoPlay === false) {
                             const newData = { ...results_Data, stateVideoPlay: true }
                             updateStateData(newData)
-                            // console.log("Hello")                          
                         }
 
                         else {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ReactDOM } from "react";
 import * as mediapipePose from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
@@ -8,7 +8,11 @@ import Canvas from "../component/Canvas/Canvas";
 import './Camera.css'
 
 
-function Camera({props, updateStateData, results_Data }) {
+function Camera({ props, updateStateData, results_Data }) {
+    const [videoName, setVideoName] = useState('')
+    const [videokey, setVideoKey] = useState(0)
+    const [cameraState, setCameraState] = useState('camera_disable')
+    const [canvasState, setCanvasState] = useState(false)
     const index_landmark = {
         nose: 0,
         left_eye_inner: 1,
@@ -58,7 +62,9 @@ function Camera({props, updateStateData, results_Data }) {
     const [cal_result, setCalResult] = useState(0)
     const onResults = (results) => {
 
+        // if( canvasState === true){
 
+        // }
         const canvasElement = canvasRef.current;
         const videoElement = videoRef.current;
 
@@ -74,6 +80,7 @@ function Camera({props, updateStateData, results_Data }) {
             const angle = Cal_angle(results, landmark1, landmark2, landmark3)
             setCalResult(angle)
         }
+
     };
 
     const userPose = new Pose({
@@ -91,9 +98,8 @@ function Camera({props, updateStateData, results_Data }) {
 
     useEffect(() => {
 
-        if (results_Data.stateVideoPlay === true) {
+        if (results_Data.stateVideoPlay == true) {
             videoRef.current.play()
-            // console.log("Video is playing")
             var myInterval = setInterval(() => {
                 const video = videoRef.current;
                 if (video)
@@ -114,10 +120,15 @@ function Camera({props, updateStateData, results_Data }) {
     }, []);
 
     useEffect(() => {
-        const newdata = {...results_Data, accuracy: cal_result}
-        updateStateData(newdata)    
-        // console.log(newdata)
+        const newdata = { ...results_Data, accuracy: cal_result }
+        updateStateData(newdata)
     }, [cal_result])
+
+    useEffect(() => {
+
+        setVideoName(results_Data.kind_exercise)
+        setVideoKey(prevKey => prevKey + 1)
+    }, [results_Data.kind_exercise])
 
     return (
         <div>
@@ -127,15 +138,26 @@ function Camera({props, updateStateData, results_Data }) {
                 marginTop: "2vw"
             }}>
                 <Canvas ref={canvasRef}></Canvas>
+                <div className={cameraState} >
+                </div>
 
                 <button className={className_cambtn} onClick={e => {
                     if (className_svg === 'svg_css') {
                         setClassName_svg('svg_css_active')
                         setClassName_cambtn('btn_camera_active')
+                        setCanvasState(true)
+                        setCameraState('camera_enable')
+                        const new_data = {...results_Data, cameraState : true}
+                        updateStateData(new_data)
+                        
                     }
                     else {
                         setClassName_svg('svg_css')
                         setClassName_cambtn('btn_camera')
+                        setCameraState('camera_disable')
+                        setCanvasState(false)
+                        const new_data = {...results_Data, cameraState : false}
+                        updateStateData(new_data)
                     }
                 }}>
                     <svg
@@ -154,8 +176,13 @@ function Camera({props, updateStateData, results_Data }) {
 
 
 
-            <video ref={videoRef} width='0' height='0' controls muted="muted">
-                <source src='video.mp4' type='video/mp4'></source>
+            <video key={videokey} ref={videoRef} width='100px' height='100px' controls muted="muted"
+                onEnded={() => {
+                    const new_data = { ...results_Data, stateVideoPlay: false }
+                    updateStateData(new_data)
+                }}
+            >
+                <source src={videoName} type='video/mp4'></source>
             </video>
         </div>
 

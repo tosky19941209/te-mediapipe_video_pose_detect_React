@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import './style/bootstrap/css/bootstrap.min.css'
+import Test from './page/Test.js'
 import Camera from './page/Camera.js'
 import Result from './page/Result.js'
 import Load from './component/Loading/Load.js'
@@ -47,8 +48,9 @@ const App = () => {
     accuracy:0,
     repetition:0,
     score:0,
-    kind_exercise:"",
-    stateVideoPlay:false
+    kind_exercise:"video1.mp4",
+    stateVideoPlay:false,
+    cameraState:false
   })
 
   const updateStateData = (value) => {
@@ -79,6 +81,7 @@ const App = () => {
         <div className='d-flex justify-content-between align-content-between' style={{ marginTop: "-5vw" }}>
           <Camera updateStateData={updateStateData} results_Data={results_Data}></Camera>
           <Result updateStateData={updateStateData} results_Data={results_Data}></Result>
+          {/* <Test></Test> */}
         </div>
       </header>
     </div>

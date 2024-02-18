@@ -74,8 +74,8 @@ function Camera({ props, updateStateData, results_Data }) {
         canvasCtx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
 
         if (results.poseLandmarks) {
-            drawConnectors(canvasCtx, results.poseLandmarks, mediapipePose.POSE_CONNECTIONS, { color: '#FF0000', lineWidth: 4 });
-            drawLandmarks(canvasCtx, [results.poseLandmarks[landmark1], results.poseLandmarks[landmark2], results.poseLandmarks[landmark3]], { color: '#00FF00', lineWidth: 1 });
+            drawConnectors(canvasCtx, results.poseLandmarks, mediapipePose.POSE_CONNECTIONS, { color: 'white', lineWidth: 4 });
+            drawLandmarks(canvasCtx, [results.poseLandmarks[landmark1], results.poseLandmarks[landmark2], results.poseLandmarks[landmark3]], { color: 'gray', lineWidth: 1 });
 
             const angle = Cal_angle(results, landmark1, landmark2, landmark3)
             setCalResult(angle)
@@ -138,30 +138,33 @@ function Camera({ props, updateStateData, results_Data }) {
                 marginTop: "2vw"
             }}>
                 <Canvas ref={canvasRef}></Canvas>
-                <div className={cameraState} >
+                {/* <div className={cameraState} > */}
+                <div className='camera_enable' >
                 </div>
 
-                <button className={className_cambtn} onClick={e => {
-                    if (className_svg === 'svg_css') {
-                        setClassName_svg('svg_css_active')
-                        setClassName_cambtn('btn_camera_active')
-                        setCanvasState(true)
-                        setCameraState('camera_enable')
-                        const new_data = {...results_Data, cameraState : true}
-                        updateStateData(new_data)
-                        
-                    }
-                    else {
-                        setClassName_svg('svg_css')
-                        setClassName_cambtn('btn_camera')
-                        setCameraState('camera_disable')
-                        setCanvasState(false)
-                        const new_data = {...results_Data, cameraState : false}
-                        updateStateData(new_data)
-                    }
-                }}>
+                <button className="btn_camera_active"
+                    // onClick={e => {
+                    //     if (className_svg === 'svg_css') {
+                    //         setClassName_svg('svg_css_active')
+                    //         setClassName_cambtn('btn_camera_active')
+                    //         setCanvasState(true)
+                    //         setCameraState('camera_enable')
+                    //         const new_data = { ...results_Data, cameraState: true }
+                    //         updateStateData(new_data)
+
+                    //     }
+                    //     else {
+                    //         setClassName_svg('svg_css')
+                    //         setClassName_cambtn('btn_camera')
+                    //         setCameraState('camera_disable')
+                    //         setCanvasState(false)
+                    //         const new_data = { ...results_Data, cameraState: false }
+                    //         updateStateData(new_data)
+                    //     }
+                    // }}
+                >
                     <svg
-                        className={className_svg}
+                        className="svg_css_active"
                         fill="currentColor"
                         viewBox="0 0 16 16"
                         height="1em"

@@ -50,7 +50,7 @@ const App = () => {
     score:0,
     kind_exercise:"video1.mp4",
     stateVideoPlay:false,
-    cameraState:false
+    cameraState:true
   })
 
   const updateStateData = (value) => {
